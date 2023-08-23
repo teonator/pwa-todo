@@ -10,9 +10,6 @@ export default defineConfig({
     vue(),
     VitePWA({
       registerType: 'autoUpdate',
-      devOptions: {
-        enabled: true
-      },
       injectRegister: 'auto',
       manifest: {
         name: 'Vue PWA Todo',
