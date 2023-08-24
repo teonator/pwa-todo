@@ -16,6 +16,11 @@ export default {
 
             this.task = '';
         },
+        editTask( taskId ) {
+            let taskIndex = this.tasks.findIndex( task => task.id === taskId );
+
+            this.tasks[taskIndex].done = !this.tasks[taskIndex].done;
+        },
     },
 }
 </script>
@@ -31,7 +36,7 @@ export default {
 
             <form class="d-flex mb-1">
                 <input  @keydown.enter.prevent="addTask" v-model="task" type="text" class="form-control me-2" placeholder="New task..." />
-                <button class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-plus" /></button>
+                <button @click.prevent="addTask" class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-plus" /></button>
             </form>
 
             <div class="d-flex align-items-center mt-4">
@@ -39,17 +44,17 @@ export default {
 
                 <ul class="nav nav-underline flex-fill justify-content-end">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active">
                             All (0)
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link">
                             Pending (0)
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link">
                             Done (0)
                         </a>
                     </li>
@@ -58,11 +63,11 @@ export default {
 
             <div v-show="tasks.length > 0" class="list-group mt-3">
                 <div v-for="task in tasks" class="list-group-item list-group-item-action d-flex align-items-center">
-                    <a class="btn btn-sm me-2 btn-outline-secondary text-white">
+                    <a @:click.prevent="editTask( task.id )" :class="[ task.done ? 'btn-outline-success' : 'btn-outline-secondary text-white' ]" class="btn btn-sm me-2">
                         <font-awesome-icon icon="fa-solid fa-check" />
                     </a>
 
-                    <p class="flex-grow-1 mb-0 text-secondary">{{ task.label }}</p>
+                    <p :class="{ 'text-decoration-line-through': task.done }" class="flex-grow-1 mb-0 text-secondary">{{ task.label }}</p>
 
                     <a class="btn btn-sm text-danger">
                         <font-awesome-icon icon="fa-solid fa-trash" />
