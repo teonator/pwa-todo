@@ -56,7 +56,7 @@ export default {
                 </ul>
             </div>
 
-            <div class="list-group mt-3">
+            <div v-show="tasks.length > 0" class="list-group mt-3">
                 <div v-for="task in tasks" class="list-group-item list-group-item-action d-flex align-items-center">
                     <a class="btn btn-sm me-2 btn-outline-secondary text-white">
                         <font-awesome-icon icon="fa-solid fa-check" />
@@ -69,6 +69,8 @@ export default {
                     </a>
                 </div>
             </div>
+
+             <p v-show="tasks.length == 0" class="mt-4 text-center">Hooray! You don't have any task.</p>
 
         </div>
     </main>
