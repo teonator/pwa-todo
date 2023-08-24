@@ -4,9 +4,9 @@ import App from './App.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-library.add( faPlus, faTrash )
+library.add( faPlus, faCheck, faTrash )
 
 import './assets/scss/app.scss'
 import * as bootstrap from 'bootstrap'

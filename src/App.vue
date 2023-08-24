@@ -1,3 +1,7 @@
+<script>
+
+</script>
+
 <template>
     <div class="container mt-5">
         <header>
@@ -6,6 +10,47 @@
 
         <main class="card my-3">
             <div class="card-body p-5">
+
+                <form class="d-flex mb-1">
+                    <input type="text" class="form-control me-2" placeholder="New task..." />
+                    <button class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-plus" /></button>
+                </form>
+
+                <div class="d-flex align-items-center mt-4">
+                    <h4 class="flex-fill m-0">Tasks</h4>
+
+                    <ul class="nav nav-underline flex-fill justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                All (0)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Pending (0)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Done (0)
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="list-group mt-3">
+                    <div class="list-group-item list-group-item-action d-flex align-items-center">
+                        <a class="btn btn-sm me-2 btn-outline-secondary">
+                            <font-awesome-icon icon="fa-solid fa-check" />
+                        </a>
+
+                        <p class="flex-grow-1 mb-0 text-secondary">Label</p>
+
+                        <a class="btn btn-sm text-danger">
+                            <font-awesome-icon icon="fa-solid fa-trash" />
+                        </a>
+                    </div>
+                </div>
 
             </div>
         </main>
