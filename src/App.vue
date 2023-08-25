@@ -5,17 +5,25 @@ export default {
             tasks: [],
             task: '',
             filter: '',
+            error: '',
         }
     },
     methods: {
         addTask() {
-            this.tasks.push( {
-                id: new Date().valueOf(),
-                label: this.task,
-                done: false,
-            } );
+            this.error = '';
 
-            this.task = '';
+            if( this.validateTask( this.task ) ) {
+                this.tasks.push( {
+                    id: new Date().valueOf(),
+                    label: this.task,
+                    done: false,
+                } );
+
+                this.task = '';
+            }
+            else {
+                this.error = 'Please enter the task.';
+            }
         },
         editTask( taskId ) {
             let taskIndex = this.getTaskIndex( taskId );
@@ -46,6 +54,9 @@ export default {
         countTasks( taskFilter ) {
             return this.getTasks( taskFilter ).length;
         },
+        validateTask( task ) {
+            return task.length > 0;
+        },
     },
 }
 </script>
@@ -60,9 +71,13 @@ export default {
         <div class="card-body p-5">
 
             <form class="d-flex mb-1">
-                <input  @keydown.enter.prevent="addTask" v-model="task" type="text" class="form-control me-2" placeholder="New task..." />
+                <input  @keydown.enter.prevent="addTask" v-model="task" :class="{ 'is-invalid': error.length }" type="text" class="form-control me-2" placeholder="New task..." />
                 <button @click.prevent="addTask" class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-plus" /></button>
             </form>
+
+            <div v-show="error.length">
+                <span class="text-danger">{{ error }}</span>
+            </div>
 
             <div class="d-flex align-items-center mt-4">
                 <h4 class="flex-fill m-0">Tasks</h4>
@@ -86,7 +101,7 @@ export default {
                 </ul>
             </div>
 
-            <div v-show="countTasks( filter ) > 0" class="list-group mt-3">
+            <div v-show="countTasks( filter )" class="list-group mt-3">
                 <div v-for="task in getTasks( filter )" class="list-group-item list-group-item-action d-flex align-items-center">
                     <a @:click.prevent="editTask( task.id )" :class="[ task.done ? 'btn-outline-success' : 'btn-outline-secondary text-white' ]" class="btn btn-sm me-2">
                         <font-awesome-icon icon="fa-solid fa-check" />
@@ -100,7 +115,7 @@ export default {
                 </div>
             </div>
 
-             <p v-show="countTasks( filter ) == 0" class="mt-4 text-center">Hooray! You don't have any {{ filter }} task.</p>
+             <p v-show="!countTasks( filter )" class="mt-4 text-center">Hooray! You don't have any {{ filter }} task.</p>
 
         </div>
     </main>
