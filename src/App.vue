@@ -4,6 +4,7 @@ export default {
         return {
             tasks: [],
             task: '',
+            filter: '',
         }
     },
     methods: {
@@ -27,6 +28,20 @@ export default {
         getTaskIndex( taskId ) {
             return this.tasks.findIndex( task => task.id === taskId );
         },
+        getTasks: function( taskFilter ) {
+            return this.tasks.filter( function( task ) {
+                switch( this ) {
+                    case 'pending':
+                        return !task.done;
+
+                    case 'done':
+                        return task.done;
+
+                    default:
+                        return true;
+                }
+            }, taskFilter );
+        },
     },
 }
 </script>
@@ -34,7 +49,7 @@ export default {
 <template>
 <div class="container mt-5">
     <header>
-        <h1>Todo</h1>
+        <h1>Vue Todo</h1>
     </header>
 
     <main class="card my-3">
@@ -50,25 +65,25 @@ export default {
 
                 <ul class="nav nav-underline flex-fill justify-content-end">
                     <li class="nav-item">
-                        <a class="nav-link active">
+                        <a @click.prevent="filter=''" :class="{ 'active': filter == '' }" class="nav-link" href="#">
                             All (0)
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">
+                        <a @click.prevent="filter='pending'" :class="{ 'active': filter == 'pending' }" class="nav-link" href="#">
                             Pending (0)
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">
+                        <a @click.prevent="filter='done'" :class="{ 'active': filter == 'done' }" class="nav-link" href="#">
                             Done (0)
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <div v-show="tasks.length > 0" class="list-group mt-3">
-                <div v-for="task in tasks" class="list-group-item list-group-item-action d-flex align-items-center">
+            <div v-show="getTasks( filter ).length > 0" class="list-group mt-3">
+                <div v-for="task in getTasks( filter )" class="list-group-item list-group-item-action d-flex align-items-center">
                     <a @:click.prevent="editTask( task.id )" :class="[ task.done ? 'btn-outline-success' : 'btn-outline-secondary text-white' ]" class="btn btn-sm me-2">
                         <font-awesome-icon icon="fa-solid fa-check" />
                     </a>
@@ -81,13 +96,13 @@ export default {
                 </div>
             </div>
 
-             <p v-show="tasks.length == 0" class="mt-4 text-center">Hooray! You don't have any task.</p>
+             <p v-show="tasks.length == 0" class="mt-4 text-center">Hooray! You don't have any {{ filter }} task.</p>
 
         </div>
     </main>
 
     <footer class="text-body-secondary text-end">
-        <p>Made with <a href="https://vuejs.org" target="_blank">Vue.js</a></p>
+        <p>Made with <a href="https://vuejs.org" target="_blank">Vue</a></p>
     </footer>
 </div>
 </template>
