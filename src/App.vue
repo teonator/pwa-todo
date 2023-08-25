@@ -17,9 +17,15 @@ export default {
             this.task = '';
         },
         editTask( taskId ) {
-            let taskIndex = this.tasks.findIndex( task => task.id === taskId );
+            let taskIndex = this.getTaskIndex( taskId );
 
-            this.tasks[taskIndex].done = !this.tasks[taskIndex].done;
+            this.tasks[ taskIndex ].done = !this.tasks[ taskIndex ].done;
+        },
+        deleteTask( taskId ) {
+            this.tasks.splice( this.getTaskIndex( taskId ) , 1 )
+        },
+        getTaskIndex( taskId ) {
+            return this.tasks.findIndex( task => task.id === taskId );
         },
     },
 }
@@ -69,7 +75,7 @@ export default {
 
                     <p :class="{ 'text-decoration-line-through': task.done }" class="flex-grow-1 mb-0 text-secondary">{{ task.label }}</p>
 
-                    <a class="btn btn-sm text-danger">
+                    <a @:click.prevent="deleteTask( task.id )" class="btn btn-sm text-danger">
                         <font-awesome-icon icon="fa-solid fa-trash" />
                     </a>
                 </div>
