@@ -28,7 +28,7 @@ export default {
         getTaskIndex( taskId ) {
             return this.tasks.findIndex( task => task.id === taskId );
         },
-        getTasks: function( taskFilter ) {
+        getTasks( taskFilter ) {
             return this.tasks.filter( function( task ) {
                 switch( this ) {
                     case 'pending':
@@ -37,10 +37,14 @@ export default {
                     case 'done':
                         return task.done;
 
+                    case 'all':
                     default:
                         return true;
                 }
             }, taskFilter );
+        },
+        countTasks( taskFilter ) {
+            return this.getTasks( taskFilter ).length;
         },
     },
 }
@@ -66,23 +70,23 @@ export default {
                 <ul class="nav nav-underline flex-fill justify-content-end">
                     <li class="nav-item">
                         <a @click.prevent="filter=''" :class="{ 'active': filter == '' }" class="nav-link" href="#">
-                            All (0)
+                            All ({{ countTasks() }})
                         </a>
                     </li>
                     <li class="nav-item">
                         <a @click.prevent="filter='pending'" :class="{ 'active': filter == 'pending' }" class="nav-link" href="#">
-                            Pending (0)
+                            Pending ({{ countTasks( 'pending' ) }})
                         </a>
                     </li>
                     <li class="nav-item">
                         <a @click.prevent="filter='done'" :class="{ 'active': filter == 'done' }" class="nav-link" href="#">
-                            Done (0)
+                            Done ({{ countTasks('done' ) }})
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <div v-show="getTasks( filter ).length > 0" class="list-group mt-3">
+            <div v-show="countTasks( filter ) > 0" class="list-group mt-3">
                 <div v-for="task in getTasks( filter )" class="list-group-item list-group-item-action d-flex align-items-center">
                     <a @:click.prevent="editTask( task.id )" :class="[ task.done ? 'btn-outline-success' : 'btn-outline-secondary text-white' ]" class="btn btn-sm me-2">
                         <font-awesome-icon icon="fa-solid fa-check" />
@@ -96,7 +100,7 @@ export default {
                 </div>
             </div>
 
-             <p v-show="tasks.length == 0" class="mt-4 text-center">Hooray! You don't have any {{ filter }} task.</p>
+             <p v-show="countTasks( filter ) == 0" class="mt-4 text-center">Hooray! You don't have any {{ filter }} task.</p>
 
         </div>
     </main>
