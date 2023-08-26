@@ -94,9 +94,7 @@ export default {
                 {{ receivedValue }}
 
                 <ul class="nav nav-underline flex-fill justify-content-end">
-                    <TaskFilter @select="filter = $event" :counter="countTasks" :active=filter type="all" />
-                    <TaskFilter @select="filter = $event" :counter="countTasks" :active=filter type="pending" />
-                    <TaskFilter @select="filter = $event" :counter="countTasks" :active=filter type="done" />
+                    <TaskFilter v-for="item in [ 'all', 'pending', 'done' ]" :type="item" @select="filter = $event" :counter="countTasks" :active=filter />
                 </ul>
             </div>
 
