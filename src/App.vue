@@ -1,9 +1,11 @@
 <script>
 import TaskFilter from './components/TaskFilter.vue'
+import TodoTask from './components/TodoTask.vue'
 
 export default {
     components: {
-        TaskFilter
+        TaskFilter,
+        TodoTask,
     },
     data() {
         return {
@@ -85,7 +87,7 @@ export default {
             </form>
 
             <div v-show="error.length">
-                <span class="text-danger">{{ error }}</span>
+                <span class="text-danger">{{ error }}</span>0ip[jk23qweop8a7u;/l]
             </div>
 
             <div class="d-flex align-items-center mt-4">
@@ -99,17 +101,7 @@ export default {
             </div>
 
             <div v-show="countTasks( filter )" class="list-group mt-3">
-                <div v-for="task in getTasks( filter )" class="list-group-item list-group-item-action d-flex align-items-center">
-                    <a @click.prevent="editTask( task.id )" :class="[ task.done ? 'btn-outline-success' : 'btn-outline-secondary text-white' ]" class="btn btn-sm me-2">
-                        <font-awesome-icon icon="fa-solid fa-check" />
-                    </a>
-
-                    <p :class="{ 'text-decoration-line-through': task.done }" class="flex-grow-1 mb-0 text-secondary">{{ task.label }}</p>
-
-                    <a @click.prevent="deleteTask( task.id )" class="btn btn-sm text-danger">
-                        <font-awesome-icon icon="fa-solid fa-trash" />
-                    </a>
-                </div>
+                <TodoTask v-for="item in getTasks( filter )" :task="item" @edit="editTask( $event )" @delete="deleteTask( $event )" />
             </div>
 
              <p v-show="!countTasks( filter )" class="mt-4 text-center">Hooray! You don't have any {{ filter }} task.</p>
