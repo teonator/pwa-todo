@@ -10,7 +10,7 @@ export default {
 
 <template>
 <li class="nav-item">
-    <a @click.prevent="$emit( 'select', type )" :class="{ 'active': active == type }" class="nav-link" href="#">
+    <a @click.prevent="$emit( 'filter', type )" :class="{ 'active': active == type }" class="nav-link" href="#">
         {{ type }} ({{ counter( type ) }})
     </a>
 </li>

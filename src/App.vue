@@ -1,17 +1,17 @@
 <script>
-import TaskFilter from './components/TaskFilter.vue'
+import TodoFilter from './components/TodoFilter.vue'
 import TodoTask from './components/TodoTask.vue'
 
 export default {
     components: {
-        TaskFilter,
+        TodoFilter,
         TodoTask,
     },
     data() {
         return {
             tasks: [],
             task: '',
-            filter: '',
+            active: '',
             error: '',
         }
     },
@@ -93,15 +93,15 @@ export default {
                 <h4 class="flex-fill m-0">Tasks</h4>
 
                 <ul class="nav nav-underline flex-fill justify-content-end">
-                    <TaskFilter v-for="item in [ 'all', 'pending', 'done' ]" :type="item" @select="filter = $event" :counter="countTasks" :active=filter />
+                    <TodoFilter v-for="item in [ 'all', 'pending', 'done' ]" :type="item" @filter="active = $event" :counter="countTasks" :active=active />
                 </ul>
             </div>
 
-            <div v-show="countTasks( filter )" class="list-group mt-3">
-                <TodoTask v-for="item in getTasks( filter )" :task="item" @edit="editTask( $event )" @delete="deleteTask( $event )" />
+            <div v-show="countTasks( active )" class="list-group mt-3">
+                <TodoTask v-for="item in getTasks( active )" :task="item" @edit="editTask( $event )" @delete="deleteTask( $event )" />
             </div>
 
-             <p v-show="!countTasks( filter )" class="mt-4 text-center">Hooray! You don't have any {{ filter }} task.</p>
+             <p v-show="!countTasks( active )" class="mt-4 text-center">Hooray! You don't have any {{ filter }} task.</p>
 
         </div>
     </main>
