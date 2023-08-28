@@ -13,7 +13,6 @@ export default {
             task: '',
             filter: '',
             error: '',
-            receivedValue: '',
         }
     },
     methods: {
@@ -92,8 +91,6 @@ export default {
 
             <div class="d-flex align-items-center mt-4">
                 <h4 class="flex-fill m-0">Tasks</h4>
-
-                {{ receivedValue }}
 
                 <ul class="nav nav-underline flex-fill justify-content-end">
                     <TaskFilter v-for="item in [ 'all', 'pending', 'done' ]" :type="item" @select="filter = $event" :counter="countTasks" :active=filter />
